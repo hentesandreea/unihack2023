@@ -41,21 +41,21 @@ const AppStack = () => {
                 headerShown: false,
                 tabBarShowLabel: false,
                 tabBarIcon: ({focused}) => (
-                    <FontAwesomeIcon size={30} icon={fasHome} color={focused?designColors.iconColorFocused:designColors.iconColorUnfocused}/>
+                    <FontAwesomeIcon size={focused?30:26} icon={fasHome} color={focused?designColors.iconColorFocused:designColors.iconColorUnfocused}/>
                 ),
             }} name={"Home"} component={Home}/>
             <Tab.Screen options={{
                 headerShown: false,
                 tabBarShowLabel: false,
                 tabBarIcon: ({focused}) => (
-                    <FontAwesomeIcon size={30} icon={fasPenToSquare} color={focused?designColors.iconColorFocused:designColors.iconColorUnfocused}/>
+                    <FontAwesomeIcon size={focused?30:26} icon={fasPenToSquare} color={focused?designColors.iconColorFocused:designColors.iconColorUnfocused}/>
                 ),
             }} name={"Journal"} component={Journal}/>
             <Tab.Screen options={{
                 headerShown: false,
                 tabBarShowLabel: false,
                 tabBarIcon: ({focused}) => (
-                    <FontAwesomeIcon size={30} icon={fasUserCircle} color={focused?designColors.iconColorFocused:designColors.iconColorUnfocused}/>
+                    <FontAwesomeIcon size={focused?30:26} icon={fasUserCircle} color={focused?designColors.iconColorFocused:designColors.iconColorUnfocused}/>
                 ),
             }} name={"Profile"} component={Profile}/>
         </Tab.Navigator>
@@ -75,6 +75,5 @@ export default function App() {
 const screenOptions = {
     tabBarStyle:{
         backgroundColor:designColors.background,
-        padding:15,
     },
 };
