@@ -13,7 +13,7 @@ function KButton({label, onPress}) {
             padding:10,
             borderRadius:10
         }}>
-            <Text style={{fontSize:20, fontWeight:"500", letterSpacing:0.2, color:"white"}}>{label}</Text>
+            <Text style={{fontSize:20, fontWeight:"500", letterSpacing:0.2}}>{label}</Text>
         </TouchableOpacity>
     );
 }
