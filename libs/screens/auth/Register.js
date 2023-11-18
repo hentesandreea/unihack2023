@@ -5,10 +5,18 @@ import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
 import {faEnvelope as fasEnvelope} from '@fortawesome/free-solid-svg-icons/faEnvelope';
 import {faUser as fasUser} from '@fortawesome/free-solid-svg-icons/faUser';
 import {faLock as fasLock} from '@fortawesome/free-solid-svg-icons/faLock';
+import {useState} from "react";
+import {handleRegister} from "../../../firebase/handleRegister";
 
 
 
-function Register(props) {
+function Register({navigation}) {
+
+    const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
+    const [age, setAge] = useState(0);
+    const [password, setPassword] = useState('')
+
     return (
         <KContainer>
             <View style={styles.viewContainer}>
@@ -24,34 +32,55 @@ function Register(props) {
 
                 <View style={styles.textInputBox}>
                     <FontAwesomeIcon size={20} icon={fasEnvelope} color={'grey'}/>
-                    <TextInput style={styles.textInput} placeholder={'Email'}/>
+                    <TextInput
+                        style={styles.textInput}
+                        placeholder={'Email'}
+                        onChangeText={(text) => setEmail(text)}
+                    />
                 </View>
 
                 <View style={styles.textInputBox2}>
                 <View style={styles.textInputBox}>
                     <FontAwesomeIcon size={20} icon={fasUser} color={'grey'}/>
-                    <TextInput style={styles.textInput} placeholder={'Name'}/>
+                    <TextInput
+                        style={styles.textInput}
+                        placeholder={'Name'}
+                        onChangeText={(text) => setName(text)}
+                    />
                 </View>
-                    <TextInput style={styles.textInput2} placeholder={'Age'} keyboardType={'numeric'}/>
+                    <TextInput
+                        style={styles.textInput2}
+                        placeholder={'Age'}
+                        keyboardType={'numeric'}
+                        onChangeText={(text) => setAge(text)}
+                    />
                 </View>
 
                 <View style={styles.textInputBox}>
                     <FontAwesomeIcon size={20} icon={fasLock} color={'grey'}/>
-                    <TextInput style={styles.textInput} placeholder={'Password'}/>
+                    <TextInput
+                        style={styles.textInput}
+                        placeholder={'Password'}
+                        onChangeText={(text) => setPassword(text)}
+                    />
                 </View>
 
             </View>
                 
             <View style={styles.viewContainer3}>
                 <TouchableOpacity style={styles.buttonContainer} onPress={() => {
-                    Alert.alert("You have been registrated!")
+                    if(email !== '' && age !== 0 && name !== '' && password !== '') {
+                        handleRegister(email, password, name, age);
+                    }else {
+                        Alert.alert("Try again", "Not enough information");
+                    }
                 }}>
                     <Text style={styles.textButton}>Register</Text>
                 </TouchableOpacity>
                 <View style={styles.viewContainer4}>
                     <Text style={styles.textLogIn}>Already have an account?</Text>
                     <TouchableOpacity style={styles.buttonContainer2} onPress={() => {
-                        Alert.alert("Your account")
+                        navigation.goBack();
                     }}>
                         <Text style={styles.textButton2}> Log In</Text>
                     </TouchableOpacity>
