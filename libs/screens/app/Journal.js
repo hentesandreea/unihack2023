@@ -8,10 +8,9 @@ import KButton from "../../ui-components/KButton";
 import KTag from "../../ui-components/KTag";
 import generalConstants from "../../../constants/GeneralConstants";
 import {generateCauses} from "../../../helpers/generalCauses";
-import {auth} from "../../../firebase/config";
+import {auth, database} from "../../../firebase/config";
 import {addThought} from "../../../firebase/addThought";
-
-
+import {update, child, get, ref} from "firebase/database";
 
 
 function Journal() {
@@ -19,6 +18,7 @@ function Journal() {
     const [journalNote, setJournalNote] = useState("")
     const [listOfCauses, setListOfCauses] = useState([])
     const [emotionToSend, setEmotionToSend] = useState("")
+
 
     return (
         <KContainer>
@@ -58,7 +58,7 @@ function Journal() {
                 }
             </View>
             <KSpacer h={30}/>
-            <KButton label={"Send data"} onPress={() => {
+            <KButton label={"Send data"} onPress={async () => {
                 if (journalNote !== "" && emotionToSend !== "") {
                     generateCauses
                     ({journalNote: journalNote, emotion: emotionToSend}).then(response => {
@@ -77,16 +77,44 @@ function Journal() {
                         //sending the thing to db
 
                         //AICI AM INCERCAT DSA FAC, DAR NU RECUNOASTE USERUL
-                        addThought(
-                            get(user.id) + user.listOfThoughtsID.length,
-                            journalNote,
-                            emotionToSend,
-                            listOfCauses,
-                            get(user.id),
-                            new Date()
-                        ).then(r => {
-                            user.listOfThoughtsID = [...user.listOfThoughtsID, get(user.id) + user.listOfThoughtsID.length]
-                        })
+                        let currentUser;
+
+                        //asta e ca sa iau userul curent
+                        get(child(ref(database), '/users/' + auth.currentUser.uid)).then((snapshot) => {
+                            currentUser = snapshot.val();
+
+                            addThought(
+                                currentUser.id + currentUser.listOfThoughtsID.length,
+                                journalNote,
+                                emotionToSend,
+                                listOfCauses,
+                                currentUser.id,
+                                new Date()
+                            ).then(r => {
+                                const newListOfToughts = [...currentUser.listOfThoughtsID, currentUser.id + currentUser.listOfThoughtsID.length]
+
+                                update(ref(database, "/users/" + currentUser.id + "/"), {listOfThoughtsID: newListOfToughts})
+                                    .then(r => {})
+                                    .catch(e => console.log(e));
+
+                                // const updates = {};
+                                //
+                                // updates['/users/' + currentUser.id + Object.keys(snapshot.val()).length] =
+                                //     {
+                                //         // id: currentUser.id,
+                                //         email: currentUser.email,
+                                //         name: currentUser.name,
+                                //         age: currentUser.age,
+                                //         listOfThoughtsID: newListOfToughts,
+                                //     }
+                                //
+                                // update(ref(database), updates);
+
+                            })
+
+                        }).catch((error) => {
+                            console.error(error);
+                        });
                         //PANA AICI
 
                         setListOfCauses([])

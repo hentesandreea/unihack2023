@@ -7,6 +7,11 @@ import {faHome as fasHome} from "@fortawesome/free-solid-svg-icons/faHome";
 import designColors from "../../../constants/Colors";
 import {faRightFromBracket as fasRightFromBracket} from "@fortawesome/free-solid-svg-icons/faRightFromBracket";
 
+import {auth} from "../../../firebase/config";
+import {database} from "../../../firebase/config";
+import {child, get, ref} from "firebase/database";
+
+
 function Profile(props) {
     return (
         <KContainer>
@@ -16,6 +21,10 @@ function Profile(props) {
                     <FontAwesomeIcon size={30} icon={fasRightFromBracket} color={designColors.iconColorUnfocused}/>
                 </TouchableOpacity>
             </View>
+
+            {/*<Button title={"APASA"} onPress={() =>{*/}
+            {/*    console.log(userulAlaBlana.name);*/}
+            {/*}}/>*/}
         </KContainer>
 
     );
