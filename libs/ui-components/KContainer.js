@@ -14,6 +14,7 @@ function KContainer(props) {
             <ScrollView contentContainerStyle={{
                 flexGrow:1,
                 paddingTop:top,
+                paddingBottom:bottom,
                 alignItems:"center",
             }}>
                 {props.children}

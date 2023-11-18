@@ -1,36 +1,16 @@
 import {Alert, Text, TextInput, TouchableOpacity, View} from "react-native";
 import KContainer from "../../ui-components/KContainer";
 import axios from "axios";
-import OpenAIConstants from "../../../constants/OpenAIConstants";
 import {useState} from "react";
-import openAIConstants from "../../../constants/OpenAIConstants";
 import KSpacer from "../../ui-components/KSpacer";
 import designColors from "../../../constants/Colors";
 import KButton from "../../ui-components/KButton";
 import KTag from "../../ui-components/KTag";
 import generalConstants from "../../../constants/GeneralConstants";
+import {generateCauses} from "../../../helpers/generalCauses";
+import {auth} from "../../../firebase/config";
 
-async function generateCauses({journalNote, emotion}) {
-    try {
-        const response = await axios.post(
-            'https://api.openai.com/v1/engines/text-davinci-003/completions',
-            {
-                prompt: openAIConstants.prompt.replace("%", journalNote).replace("%", emotion),
-                max_tokens: 200
-            },
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${OpenAIConstants.api}`
-                }
-            }
-        );
-        return (response.data.choices[0].text.trim());
-    } catch (error) {
-        console.error('Error generating required answer:', error);
-        throw error;
-    }
-}
+
 
 
 function Journal() {
@@ -43,7 +23,7 @@ function Journal() {
         <KContainer>
             <KSpacer h={20}/>
             <View style={{width: "90%", alignItems: "flex-start"}}>
-                <Text style={{fontSize: 32, fontWeight: "500", color: designColors.primary}}>My thoughts</Text>
+                <Text style={{fontSize: 32, fontWeight: "500"}}>My thoughts</Text>
             </View>
             <KSpacer h={20}/>
             <View style={{width: "90%", alignItems: "flex-start", paddingHorizontal: 5}}>
@@ -107,6 +87,7 @@ function Journal() {
                     ])
                 }
             }}/>
+            <KSpacer h={20}/>
         </KContainer>
     );
 }

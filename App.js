@@ -7,6 +7,9 @@ import Register from "./libs/screens/auth/Register";
 import Home from "./libs/screens/app/Home";
 import Journal from "./libs/screens/app/Journal";
 import Profile from "./libs/screens/app/Profile";
+import {useEffect, useState} from "react";
+import {onAuthStateChanged} from "@firebase/auth";
+import {auth} from "./firebase/config";
 
 import {faHome as fasHome} from '@fortawesome/free-solid-svg-icons/faHome';
 import {faPenToSquare as fasPenToSquare} from '@fortawesome/free-solid-svg-icons/faPenToSquare'
@@ -15,11 +18,12 @@ import {faEnvelope as fasEnvelope} from '@fortawesome/free-solid-svg-icons/faEnv
 import {faUser as fasUser} from '@fortawesome/free-solid-svg-icons/faUser';
 import {faLock as fasLock} from '@fortawesome/free-solid-svg-icons/faLock';
 import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
+import {faRightFromBracket as fasRightFromBracket} from '@fortawesome/free-solid-svg-icons/faRightFromBracket';
 import {library} from "@fortawesome/fontawesome-svg-core";
 import designColors from "./constants/Colors";
 
 library.add(
-    fasHome, fasPenToSquare, fasUserCircle, fasEnvelope, fasUser, fasLock
+    fasHome, fasPenToSquare, fasUserCircle, fasRightFromBracket, fasEnvelope, fasUser, fasLock
 );
 
 const Stack = createNativeStackNavigator();
@@ -64,10 +68,23 @@ const AppStack = () => {
 }
 
 export default function App() {
+
+
+    const [isLoggedIn ,setIsLoggedIn] = useState(false);
+    useEffect(() => {
+        onAuthStateChanged(auth, user => {
+            if (!user) {
+                setIsLoggedIn(true);
+            } else {
+                setIsLoggedIn(false);
+            }
+        })
+    })
+
     return (
         <NavigationContainer>
             {
-                false ? AppStack() : AuthStack()
+                isLoggedIn ? AppStack() : AuthStack()
             }
         </NavigationContainer>
     );
