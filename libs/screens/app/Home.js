@@ -25,18 +25,23 @@ function Home() {
                     quotes.length !== 0 ?
                         quotes.map(quote => <KMotivationalQuotes key={quotes.indexOf(quote)} title={quote[1]}
                                                                  description={quote[0]}/>) :
-                        <LottieView
-                            autoPlay
-                            speed={1.5}
-                            source={require("../../../lottie/loading.json")}
-                            style={{height: "100%", width: "100%"}}/>
+                        <View style={{height:"100%", width:"100%", alignItems:"center", justifyContent:"center"}}>
+                            <LottieView
+                                autoPlay
+                                speed={1.5}
+                                source={require("../../../lottie/loading.json")}
+                                style={{height: 250, width: 250}}/>
+                        </View>
                 }
             </View>
             <KSpacer h={20}/>
-            <KButton label={"Refresh"} onPress={()=>{
+            {
+                quotes.length !== 0 &&
+                <KButton label={"Refresh"} onPress={() => {
                 setQuotes([])
                 getQuotes().then(resp => setQuotes(resp))
-            }} color={designColors.primary}/>
+            }} color={designColors.primary}/>}
+            <KSpacer h={20}/>
         </KContainer>
     );
 }

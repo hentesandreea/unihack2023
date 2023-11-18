@@ -86,6 +86,7 @@ function Journal() {
                     ])
                 }
             }}/>
+            <KSpacer h={20}/>
         </KContainer>
     );
 }
