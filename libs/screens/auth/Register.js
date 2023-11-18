@@ -61,6 +61,8 @@ function Register({navigation}) {
                     <TextInput
                         style={styles.textInput}
                         placeholder={'Password'}
+                        secureTextEntry
+                        value={password}
                         onChangeText={(text) => setPassword(text)}
                     />
                 </View>
@@ -79,7 +81,7 @@ function Register({navigation}) {
                 </TouchableOpacity>
                 <View style={styles.viewContainer4}>
                     <Text style={styles.textLogIn}>Already have an account?</Text>
-                    <TouchableOpacity style={styles.buttonContainer2} onPress={() => {
+                    <TouchableOpacity onPress={() => {
                         navigation.goBack();
                     }}>
                         <Text style={styles.textButton2}> Log In</Text>
