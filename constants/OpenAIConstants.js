@@ -1,5 +1,5 @@
 const openAIConstants = {
-  api: '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',
+  api: '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',
   prompt:
     'User Note: %\n' +
     '\n' +
