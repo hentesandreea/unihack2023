@@ -1,5 +1,7 @@
+import { OpenAIKey } from '../API_KEY';
+
 const openAIConstants = {
-  api: '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',
+  api: OpenAIKey,
   prompt:
     'User Note: %\n' +
     '\n' +
