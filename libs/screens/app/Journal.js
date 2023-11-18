@@ -8,9 +8,9 @@ import KButton from "../../ui-components/KButton";
 import KTag from "../../ui-components/KTag";
 import generalConstants from "../../../constants/GeneralConstants";
 import {generateCauses} from "../../../helpers/generalCauses";
-import {auth} from "../../../firebase/config";
-
-
+import {auth, database} from "../../../firebase/config";
+import {addThought} from "../../../firebase/addThought";
+import {update, child, get, ref} from "firebase/database";
 
 
 function Journal() {
@@ -18,6 +18,7 @@ function Journal() {
     const [journalNote, setJournalNote] = useState("")
     const [listOfCauses, setListOfCauses] = useState([])
     const [emotionToSend, setEmotionToSend] = useState("")
+
 
     return (
         <KContainer>
@@ -57,7 +58,7 @@ function Journal() {
                 }
             </View>
             <KSpacer h={30}/>
-            <KButton label={"Send data"} onPress={() => {
+            <KButton label={"Send data"} onPress={async () => {
                 if (journalNote !== "" && emotionToSend !== "") {
                     generateCauses
                     ({journalNote: journalNote, emotion: emotionToSend}).then(response => {
@@ -74,6 +75,29 @@ function Journal() {
                         ])
                     } else {
                         //sending the thing to db
+                        let currentUser;
+
+                        get(child(ref(database), '/users/' + auth.currentUser.uid)).then((snapshot) => {
+                            currentUser = snapshot.val();
+
+                            addThought(
+                                currentUser.id + currentUser.listOfThoughtsID.length,
+                                journalNote,
+                                emotionToSend,
+                                listOfCauses,
+                                currentUser.id,
+                                new Date()
+                            ).then(r => {
+                                const newListOfToughts = [...currentUser.listOfThoughtsID, currentUser.id + currentUser.listOfThoughtsID.length]
+
+                                update(ref(database, "/users/" + currentUser.id + "/"), {listOfThoughtsID: newListOfToughts})
+                                    .then(r => {})
+                                    .catch(e => console.log(e));
+                            })
+                        }).catch((error) => {
+                            console.error(error);
+                        });
+
                         setListOfCauses([])
                         setJournalNote("")
                         setEmotionToSend("")
