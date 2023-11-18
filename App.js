@@ -7,16 +7,20 @@ import Register from "./libs/screens/auth/Register";
 import Home from "./libs/screens/app/Home";
 import Journal from "./libs/screens/app/Journal";
 import Profile from "./libs/screens/app/Profile";
+import {useEffect, useState} from "react";
+import {onAuthStateChanged} from "@firebase/auth";
+import {auth} from "./firebase/config";
 
 import {faHome as fasHome} from '@fortawesome/free-solid-svg-icons/faHome';
 import {faPenToSquare as fasPenToSquare} from '@fortawesome/free-solid-svg-icons/faPenToSquare'
 import {faUserCircle as fasUserCircle} from '@fortawesome/free-solid-svg-icons/faUserCircle'
 import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
+import {faRightFromBracket as fasRightFromBracket} from '@fortawesome/free-solid-svg-icons/faRightFromBracket';
 import {library} from "@fortawesome/fontawesome-svg-core";
 import designColors from "./constants/Colors";
 
 library.add(
-    fasHome, fasPenToSquare, fasUserCircle
+    fasHome, fasPenToSquare, fasUserCircle, fasRightFromBracket
 );
 
 const Stack = createNativeStackNavigator();
@@ -25,7 +29,7 @@ const Tab = createBottomTabNavigator();
 const AuthStack = () => {
     return (
         <Stack.Navigator>
-            <Stack.Screen options={{headerShown: false}} name={"Login"} component={Login}/>
+            <Stack.Screen options={{headerShown: false}} name={"Login"} component={Login} />
             <Stack.Screen options={{headerShown: false}} name={"Register"} component={Register}/>
         </Stack.Navigator>
     )
@@ -63,10 +67,23 @@ const AppStack = () => {
 }
 
 export default function App() {
+
+
+    const [isLoggedIn ,setIsLoggedIn] = useState(false);
+    useEffect(() => {
+        onAuthStateChanged(auth, user => {
+            if (user) {
+                setIsLoggedIn(true);
+            } else {
+                setIsLoggedIn(false);
+            }
+        })
+    })
+
     return (
         <NavigationContainer>
             {
-                true ? AppStack() : AuthStack()
+                isLoggedIn ? AppStack() : AuthStack()
             }
         </NavigationContainer>
     );
