@@ -1,4 +1,4 @@
-import {Text} from "react-native";
+import {StyleSheet, Text} from "react-native";
 import KContainer from "../../ui-components/KContainer";
 function Login(props) {
     return (

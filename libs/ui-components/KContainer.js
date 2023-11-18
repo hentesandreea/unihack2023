@@ -1,5 +1,5 @@
 import React from 'react';
-import {KeyboardAvoidingView, ScrollView, StyleSheet} from "react-native";
+import {KeyboardAvoidingView, ScrollView, StyleSheet, TextInput} from "react-native";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import designColors from "../../constants/Colors";
 
