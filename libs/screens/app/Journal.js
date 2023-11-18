@@ -9,6 +9,7 @@ import KTag from "../../ui-components/KTag";
 import generalConstants from "../../../constants/GeneralConstants";
 import {generateCauses} from "../../../helpers/generalCauses";
 import {auth} from "../../../firebase/config";
+import {addThought} from "../../../firebase/addThought";
 
 
 
@@ -74,6 +75,20 @@ function Journal() {
                         ])
                     } else {
                         //sending the thing to db
+
+                        //AICI AM INCERCAT DSA FAC, DAR NU RECUNOASTE USERUL
+                        addThought(
+                            get(user.id) + user.listOfThoughtsID.length,
+                            journalNote,
+                            emotionToSend,
+                            listOfCauses,
+                            get(user.id),
+                            new Date()
+                        ).then(r => {
+                            user.listOfThoughtsID = [...user.listOfThoughtsID, get(user.id) + user.listOfThoughtsID.length]
+                        })
+                        //PANA AICI
+
                         setListOfCauses([])
                         setJournalNote("")
                         setEmotionToSend("")
