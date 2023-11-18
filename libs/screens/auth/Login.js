@@ -6,12 +6,11 @@ import {faEnvelope as fasEnvelope} from "@fortawesome/free-solid-svg-icons/faEnv
 import {faUser as fasUser} from "@fortawesome/free-solid-svg-icons/faUser";
 import {faLock as fasLock} from "@fortawesome/free-solid-svg-icons/faLock";
 import {handleRegister} from "../../../firebase/handleRegister";
+import {handleLogin} from "../../../firebase/handleLogin";
 
 function Login({navigation}) {
 
     const [email, setEmail] = useState('');
-    const [name, setName] = useState('');
-    const [age, setAge] = useState(0);
     const [password, setPassword] = useState('')
 
     return (
@@ -52,8 +51,8 @@ function Login({navigation}) {
 
             <View style={styles.viewContainer3}>
                 <TouchableOpacity style={styles.buttonContainer} onPress={() => {
-                    if (email !== '' && age !== 0 && name !== '' && password !== '') {
-                        handleRegister(email, password, name, age);
+                    if (email !== '' && password !== '') {
+                        handleLogin(email, password);
                     } else {
                         Alert.alert("Try again", "Not enough information");
                     }
@@ -63,7 +62,7 @@ function Login({navigation}) {
                 <View style={styles.viewContainer4}>
                     <Text style={styles.textLogIn}>Do not have an account yet?</Text>
                     <TouchableOpacity onPress={() => {
-                        Alert.alert("Logged in!")
+                        navigation.navigate("Register")
                     }}>
                         <Text style={styles.textButton2}> Register</Text>
                     </TouchableOpacity>
