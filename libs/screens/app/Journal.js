@@ -8,6 +8,7 @@ import KButton from "../../ui-components/KButton";
 import KTag from "../../ui-components/KTag";
 import generalConstants from "../../../constants/GeneralConstants";
 import {generateCauses} from "../../../helpers/generalCauses";
+import {auth} from "../../../firebase/config";
 
 
 

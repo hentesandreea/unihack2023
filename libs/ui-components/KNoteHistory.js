@@ -1,5 +1,5 @@
 import {View, Text,StyleSheet} from "react-native";
-import KTag from "../../ui-components/KTag";
+import KTag from "./KTag";
 
 function KNoteHistory(props){
 return(
