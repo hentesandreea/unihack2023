@@ -21,10 +21,6 @@ function Profile(props) {
                     <FontAwesomeIcon size={30} icon={fasRightFromBracket} color={designColors.iconColorUnfocused}/>
                 </TouchableOpacity>
             </View>
-
-            {/*<Button title={"APASA"} onPress={() =>{*/}
-            {/*    console.log(userulAlaBlana.name);*/}
-            {/*}}/>*/}
         </KContainer>
 
     );

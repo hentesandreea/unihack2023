@@ -75,11 +75,8 @@ function Journal() {
                         ])
                     } else {
                         //sending the thing to db
-
-                        //AICI AM INCERCAT DSA FAC, DAR NU RECUNOASTE USERUL
                         let currentUser;
 
-                        //asta e ca sa iau userul curent
                         get(child(ref(database), '/users/' + auth.currentUser.uid)).then((snapshot) => {
                             currentUser = snapshot.val();
 
@@ -96,26 +93,10 @@ function Journal() {
                                 update(ref(database, "/users/" + currentUser.id + "/"), {listOfThoughtsID: newListOfToughts})
                                     .then(r => {})
                                     .catch(e => console.log(e));
-
-                                // const updates = {};
-                                //
-                                // updates['/users/' + currentUser.id + Object.keys(snapshot.val()).length] =
-                                //     {
-                                //         // id: currentUser.id,
-                                //         email: currentUser.email,
-                                //         name: currentUser.name,
-                                //         age: currentUser.age,
-                                //         listOfThoughtsID: newListOfToughts,
-                                //     }
-                                //
-                                // update(ref(database), updates);
-
                             })
-
                         }).catch((error) => {
                             console.error(error);
                         });
-                        //PANA AICI
 
                         setListOfCauses([])
                         setJournalNote("")
