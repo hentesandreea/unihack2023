@@ -40,7 +40,7 @@ function Home() {
                 <KButton label={"Refresh"} onPress={() => {
                 setQuotes([])
                 getQuotes().then(resp => setQuotes(resp))
-            }} color={designColors.primary}/>}
+            }} color={designColors.gradient1}/>}
             <KSpacer h={20}/>
         </KContainer>
     );

@@ -3,7 +3,7 @@ import KContainer from "../../ui-components/KContainer";
 function Login(props) {
     return (
         <KContainer>
-            <Text>Login</Text>
+            <Text>LOGIN</Text>
         </KContainer>
     );
 }
