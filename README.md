@@ -1,6 +1,6 @@
 # HealthyMind
 
--- Descripsion
+Our journey began with a simple yet profound realization: the importance of understanding and managing our emotions for overall well-being. In essence, HealthyMind is a product of a genuine desire to make a difference. It emerged from the belief that everyone deserves a tool that not only allows them to express their feelings but also helps them understand and manage their emotions in a positive and empowering way.
 
 # Home
 
