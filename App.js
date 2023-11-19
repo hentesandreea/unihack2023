@@ -21,6 +21,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faRightFromBracket as fasRightFromBracket} from '@fortawesome/free-solid-svg-icons/faRightFromBracket';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import designColors from './constants/Colors';
+import {ProfileStack} from "./libs/screens/app/ProfileStack";
 
 library.add(
     fasHome,
@@ -109,8 +110,8 @@ const AppStack = () => {
                         />
                     ),
                 }}
-                name={'Profile'}
-                component={Profile}
+                name={'ProfileStack'}
+                component={ProfileStack}
             />
         </Tab.Navigator>
     );

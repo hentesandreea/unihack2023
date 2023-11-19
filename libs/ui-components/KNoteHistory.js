@@ -3,30 +3,38 @@ import KTag from "./KTag";
 import designColors from "../../constants/Colors";
 import {LinearGradient} from "expo-linear-gradient";
 import KSpacer from "./KSpacer";
+import {useEffect, useState} from "react";
+import {onValue, ref} from "firebase/database";
+import {auth, database} from "../../firebase/config";
+import formatDateToString from "../../helpers/formatDate";
+import {auto} from "openai/_shims/registry";
 
-function KNoteHistory(props) {
+function KNoteHistory({thought}) {
 
     const {height, width} = useWindowDimensions();
+    const [causes, setCauses] = useState(thought["listOfCouses"])
+
+    console.log(causes)
 
     return (
-        <View style={{width: width * 0.8, padding: 10, height: height * 0.4, borderRadius: 10}}>
+        <View style={{width: width * 0.8, padding: 10, borderRadius: 10}}>
             <LinearGradient colors={designColors.gradient1} style={{
                 width: "100%",
                 borderTopRightRadius: 10,
                 borderTopLeftRadius: 10,
                 padding:15
             }}>
-                <Text style={{fontSize: 22, fontWeight: "500"}}>12.11.2023</Text>
+                <Text style={{fontSize: 22, fontWeight: "500"}}>{formatDateToString(thought["date"])}</Text>
                 <KSpacer/>
-                <View style={{width: "30%",}}>
-                    <KTag color={designColors.gradient4} onPress={()=>{}} label={"Happy"}/>
+                <View style={{width: "50%"}}>
+                    <KTag color={designColors.gradient4} onPress={()=>{}} label={thought["selectedEmotion"]}/>
 
                 </View>
                 <KSpacer h={5}/>
                 <View style={{width:"100%", flexDirection:"row", flexWrap:"wrap", gap:5}}>
-                    <KTag color={designColors.gradient3} onPress={()=>{}} label={"Anniversary"}/>
-                    <KTag color={designColors.gradient3} onPress={()=>{}} label={"Party"}/>
-                    <KTag color={designColors.gradient3} onPress={()=>{}} label={"Friends"}/>
+                    <KTag color={designColors.gradient3} onPress={()=>{}} label={causes[0]}/>
+                    <KTag color={designColors.gradient3} onPress={()=>{}} label={causes[1]}/>
+                    <KTag color={designColors.gradient3} onPress={()=>{}} label={causes[2]}/>
                 </View>
 
             </LinearGradient>
@@ -37,8 +45,7 @@ function KNoteHistory(props) {
                 borderBottomRightRadius: 10,
                 borderBottomLeftRadius: 10,
             }}>
-                <Text style={{fontSize: 14, fontWeight: "500"}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                    labore et dolore magna aliqua. Faucibus purus in massa tempor nec feugiat nisl pretium.</Text>
+                <Text style={{fontSize: 14, fontWeight: "500"}}>{thought["note"]}</Text>
             </View>
 
         </View>
