@@ -16,6 +16,7 @@ import designColors from '../../../constants/Colors';
 import {faRightFromBracket as fasRightFromBracket} from '@fortawesome/free-solid-svg-icons/faRightFromBracket';
 import KNoteHistory from '../../ui-components/KNoteHistory';
 import KButton from '../../ui-components/KButton';
+import KHeaderProfile from '../../ui-components/KHeaderProfile';
 
 import {auth} from "../../../firebase/config";
 import {database} from "../../../firebase/config";
@@ -49,23 +50,23 @@ function Profile({navigation}) {
 
 
     return (
-        <KContainer>
-            <View
-                style={{
-                    width: '100%',
-                    height: 50,
-                    paddingHorizontal: 20,
-                    paddingVertical: 5,
-                    alignItems: 'flex-end',
-                }}>
-                <TouchableOpacity onPress={handleLogout}>
-                    <FontAwesomeIcon
-                        size={30}
-                        icon={fasRightFromBracket}
-                        color={designColors.iconColorUnfocused}
-                    />
-                </TouchableOpacity>
-            </View>
+        <KContainer><KHeaderProfile></KHeaderProfile>
+            {/*<View*/}
+              {/*  style={{*/}
+                {/*    width: '100%',*/}
+                {/*    height: 50,*/}
+                {/*    paddingHorizontal: 20,*/}
+                {/*    paddingVertical: 5,*/}
+                {/*    alignItems: 'flex-end',*/}
+              {/*  }}>*/}
+              {/*  <TouchableOpacity onPress={handleLogout}>*/}
+                {/*    <FontAwesomeIcon*/}
+                  {/*      size={30}*/}
+                  {/*      icon={fasRightFromBracket}*/}
+                  {/*      color={designColors.iconColorUnfocused}*/}
+                {/*    />*/}
+              {/*  </TouchableOpacity>*/}
+            {/*</View>*/}
             <FlatList
                 showsHorizontalScrollIndicator={false}
                 horizontal
