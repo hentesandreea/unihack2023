@@ -1,1 +1,1 @@
-export const OpenAIKey = "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";
+export const OpenAIKey = "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";
