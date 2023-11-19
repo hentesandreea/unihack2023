@@ -1,7 +1,7 @@
 import { Alert, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import KContainer from '../../ui-components/KContainer';
 import axios from 'axios';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import KSpacer from '../../ui-components/KSpacer';
 import designColors from '../../../constants/Colors';
 import KButton from '../../ui-components/KButton';
@@ -64,7 +64,19 @@ function Journal() {
         }}
         onChangeText={text => setJournalNote(text)}
       />
-      <KSpacer h={20} />
+      <KSpacer h={30} />
+      <View
+        style={{
+          width: '90%',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
+        <Text style={{ fontSize: 16, fontWeight: '300' }}>
+          Select an emotion that describes how you feel
+        </Text>
+      </View>
+      <KSpacer />
       <View
         style={{
           width: '90%',

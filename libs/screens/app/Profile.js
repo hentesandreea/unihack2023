@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import {
     Button,
     FlatList,
@@ -18,9 +18,11 @@ import KNoteHistory from '../../ui-components/KNoteHistory';
 import KButton from '../../ui-components/KButton';
 import KHeaderProfile from '../../ui-components/KHeaderProfile';
 
+import KPiePercentage from '../../ui-components/KPiePercentage';
+import KSpacer from '../../ui-components/KSpacer';
 import {auth} from "../../../firebase/config";
 import {database} from "../../../firebase/config";
-import {child, get, onValue, ref} from "firebase/database";
+import { onValue, ref} from "firebase/database";
 import formatDate from "../../../helpers/formatDate";
 
 
@@ -28,6 +30,19 @@ function Profile({navigation}) {
     const [historyData, setHistoryData] = useState([]);
     const [thoughtData, setToughtData] = useState()
     const {height, width} = useWindowDimensions();
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    onValue(ref(database, 'users/'), snapshot => {
+      if (snapshot.exists()) {
+        let aux = Object.values(snapshot.val()).filter(
+          el => el['id'] === auth.currentUser.uid
+        );
+
+        setUser(aux[0]);
+      }
+    });
+  }, []);
 
     const listOfThoughtRoute = ref(database, 'thoughts/');
 
@@ -37,7 +52,7 @@ function Profile({navigation}) {
             if(snapshot.exists()){
                 let thoughts = Object.values(snapshot.val()).filter(th => {
                     return th["userId"] === auth.currentUser.uid
-                })
+    })
                 thoughts.push("&")
                 setHistoryData(thoughts.filter(el => formatDate(el["date"]) === formatDate( (new Date()).toString()) || el==="&"))
             }
@@ -50,28 +65,59 @@ function Profile({navigation}) {
 
 
     return (
-        <KContainer><KHeaderProfile></KHeaderProfile>
-            {/*<View*/}
-              {/*  style={{*/}
-                {/*    width: '100%',*/}
-                {/*    height: 50,*/}
-                {/*    paddingHorizontal: 20,*/}
-                {/*    paddingVertical: 5,*/}
-                {/*    alignItems: 'flex-end',*/}
-              {/*  }}>*/}
-              {/*  <TouchableOpacity onPress={handleLogout}>*/}
-                {/*    <FontAwesomeIcon*/}
-                  {/*      size={30}*/}
-                  {/*      icon={fasRightFromBracket}*/}
-                  {/*      color={designColors.iconColorUnfocused}*/}
-                {/*    />*/}
-              {/*  </TouchableOpacity>*/}
-            {/*</View>*/}
+      <KContainer><KHeaderProfile username={user['name']} age={user['age']} />
+      <View
+        style={{
+          width: '90%',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
+        <Text style={{ fontSize: 28, fontWeight: '500' }}>Stats</Text>
+      </View>
+
+      <View
+                style={{
+                    width: '90%',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
+        <Text style={{ fontSize: 16, fontWeight: '300' }}>
+          Stats based on my notes
+        </Text>
+      </View>
+      <KSpacer />
+      <KPiePercentage forUser={true} />
+      <KSpacer h={20} />
+                <View
+        style={{
+          width: '90%',
+          flexDirection: 'row',
+                    alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
+        <Text style={{ fontSize: 28, fontWeight: '500' }}>History</Text>
+              </View>
+
+      <View
+        style={{
+          width: '90%',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
+        <Text style={{ fontSize: 16, fontWeight: '300' }}>
+          My written notes
+                </Text>
+            </View>
+      <KSpacer />
             <FlatList
                 showsHorizontalScrollIndicator={false}
                 horizontal
-                data={historyData}
-                renderItem={({ item, index }) =>
+                contentContainerStyle={{ height: height * 0.3 }}
+        data={historyData}
+        renderItem={({ item, index }) =>
                     historyData.indexOf(item) !== historyData.length -1? (
                         <KNoteHistory thought={item} />
                     ) : (
@@ -89,6 +135,14 @@ function Profile({navigation}) {
                             />
                         </View>
                     )}/>
+      <KSpacer h={20} />
+      <TouchableOpacity onPress={handleLogout}>
+        <FontAwesomeIcon
+          size={30}
+          icon={fasRightFromBracket}
+          color={designColors.iconColorUnfocused}
+        />
+      </TouchableOpacity>
         </KContainer>
     );
 }
