@@ -35,4 +35,5 @@
 > - Pop Iulian: Firebase integrations & React-Native Development
 > - Andra Malaescu: React-Native Development, Tester & Design 
 > - Andreea Hentes: React-Native Development & UI/UX Design
+> - Cosmin Trifu: React-Native Development
 > - Poenaru Iulian: React-Native Development, Firebase integrations & Coordinator
